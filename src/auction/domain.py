@@ -1,3 +1,6 @@
+import sys
+
+
 class User:
 
     def __init__(self, name):
@@ -24,3 +27,20 @@ class Auction:
     @property
     def bids(self):
         return self.__bids
+
+
+class Evaluator:
+
+    def __init__(self):
+        self.highest_bid = sys.float_info.min
+        self.lowest_bid = sys.float_info.max
+
+    def evaluate(self, auction: Auction):
+
+        for bid in auction.bids:
+
+            if bid.value > self.highest_bid:
+                self.highest_bid = bid.value
+
+            if bid.value < self.lowest_bid:
+                self.lowest_bid = bid.value

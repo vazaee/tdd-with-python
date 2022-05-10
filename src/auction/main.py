@@ -1,4 +1,4 @@
-from src.auction.domain import User, Bid, Auction
+from src.auction.domain import User, Bid, Auction, Evaluator
 
 gabriel = User('Gabriel')
 marcio = User('Marcio')
@@ -12,3 +12,8 @@ auc.bids.append(gabriel_bid)
 
 for bid in auc.bids:
     print(f'User {bid.user.name} bid {bid.value}')
+
+evaluator = Evaluator()
+evaluator.evaluate(auc)
+
+print(f'The lowest bid was {evaluator.lowest_bid} and the highest bid was {evaluator.highest_bid}')

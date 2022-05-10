@@ -1,2 +1,2 @@
 # tdd-with-python
-This project approach an example of tdd with python. 
+this is a project using TDD with Python. 

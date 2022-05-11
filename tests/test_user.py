@@ -2,6 +2,8 @@ from src.auction.domain import User, Auction
 
 import pytest
 
+from src.auction.exceptions import InvalidBid
+
 
 @pytest.fixture
 def vini():
@@ -32,6 +34,6 @@ def test_must_allow_bidding_when_value_equal_wallet_value(vini, auc):
 
 
 def test_should_not_allow_bidding_with_value_higher_than_wallet_value(vini, auc):
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidBid):
 
         vini.proposes_bid(auc, 200.0)

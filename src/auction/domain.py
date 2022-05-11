@@ -27,13 +27,17 @@ class Auction:
         self.lowest_bid = sys.float_info.max
 
     def propose(self, bid: Bid):
-        if bid.value > self.highest_bid:
-            self.highest_bid = bid.value
+        if not self.__bids or self.__bids[-1].user != bid.user and bid.value > self.__bids[-1].value:
 
-        if bid.value < self.lowest_bid:
-            self.lowest_bid = bid.value
+            if bid.value > self.highest_bid:
+                self.highest_bid = bid.value
 
-        self.__bids.append(bid)
+            if bid.value < self.lowest_bid:
+                self.lowest_bid = bid.value
+
+            self.__bids.append(bid)
+        else:
+            raise ValueError("Bidding error")
 
     @property
     def bids(self):

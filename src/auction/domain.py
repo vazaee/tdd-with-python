@@ -1,10 +1,21 @@
-import sys
-
 
 class User:
 
-    def __init__(self, name):
+    def __init__(self, name, wallet):
         self.__name = name
+        self.__wallet = wallet
+
+    def proposes_bid(self, auc, value):
+        if value > self.__wallet:
+            raise ValueError('Cannot bidding with a value higher than wallet value')
+
+        bid = Bid(self, value)
+        auc.propose(bid)
+        self.__wallet -= value
+
+    @property
+    def wallet(self):
+        return self.__wallet
 
     @property
     def name(self):
@@ -23,17 +34,16 @@ class Auction:
     def __init__(self, description):
         self.description = description
         self.__bids = []
-        self.highest_bid = sys.float_info.min
-        self.lowest_bid = sys.float_info.max
+        self.highest_bid = 0.0
+        self.lowest_bid = 0.0
 
     def propose(self, bid: Bid):
         if not self.__bids or self.__bids[-1].user != bid.user and bid.value > self.__bids[-1].value:
 
-            if bid.value > self.highest_bid:
-                self.highest_bid = bid.value
-
-            if bid.value < self.lowest_bid:
+            if not self.__bids:
                 self.lowest_bid = bid.value
+
+            self.highest_bid = bid.value
 
             self.__bids.append(bid)
         else:

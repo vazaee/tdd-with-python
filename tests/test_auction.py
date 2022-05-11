@@ -6,12 +6,12 @@ from src.auction.domain import User, Bid, Auction
 class TestAuction(TestCase):
 
     def setUp(self):
-        self.gabriel = User('Gabriel')
+        self.gabriel = User('Gabriel', 500.0)
         self.gabriel_bid = Bid(self.gabriel, 150.0)
         self.auc = Auction('Cellphone')
 
     def test_must_return_the_highest_and_lowest_value_when_added_in_ascending_order(self):
-        marcio = User('Marcio')
+        marcio = User('Marcio', 500.0)
         marcio_bid = Bid(marcio, 100.0)
 
         self.auc.propose(marcio_bid)
@@ -26,7 +26,7 @@ class TestAuction(TestCase):
     def test_should_not_allow_bidding_in_descending_order(self):
 
         with self.assertRaises(ValueError):
-            marcio = User('Marcio')
+            marcio = User('Marcio', 500.0)
             marcio_bid = Bid(marcio, 100.0)
 
             self.auc.propose(self.gabriel_bid)
@@ -39,8 +39,8 @@ class TestAuction(TestCase):
         self.assertEqual(150.0, self.auc.highest_bid)
 
     def test_must_return_the_highest_and_lowest_value_when_auction_has_three_bids(self):
-        marcio = User('Marcio')
-        vine = User('Vinicius')
+        marcio = User('Marcio', 500.0)
+        vine = User('Vinicius', 500.0)
 
         marcio_bid = Bid(marcio, 180.0)
         vine_bid = Bid(vine, 200.0)
@@ -62,7 +62,7 @@ class TestAuction(TestCase):
         self.assertEqual(1, number_of_bids_received)
 
     def test_must_allow_bidding_if_the_last_user_is_different(self):
-        yuri = User('Yuri')
+        yuri = User('Yuri', 500.0)
         yuri_bid = Bid(yuri, 200.0)
 
         self.auc.propose(self.gabriel_bid)
